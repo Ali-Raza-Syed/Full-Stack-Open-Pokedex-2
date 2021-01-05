@@ -51,11 +51,9 @@ jobs:
       - name: Bump version and push tag (master merge)
         if: ${{ github.event_name == 'push' }}
         uses: anothrNick/github-tag-action@1.33.0
-        with:
-          DRY_RUN: true
-          DEFAULT_BUMP: patch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
 
 
 
