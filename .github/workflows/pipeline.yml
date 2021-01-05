@@ -46,6 +46,7 @@ jobs:
           rollbackonhealthcheckfailed: true
 
       - uses: actions/checkout@v2
+        if: ${{ github.event_name == 'push' }}
 
       - name: Bump version and push tag (master merge)
         if: ${{ github.event_name == 'push' }}
