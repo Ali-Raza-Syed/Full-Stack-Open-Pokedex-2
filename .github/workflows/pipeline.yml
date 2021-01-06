@@ -54,7 +54,7 @@ jobs:
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       #     DEFAULT_BUMP: patch
-      
+      #
       - name: commit messages
         env:
           COMMIT_MESSAGES: ${{ toJson( contains( join( github.event.commits.*.message, ',' ), '#skip' ) ) }}
