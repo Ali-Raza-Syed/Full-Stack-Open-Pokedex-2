@@ -35,25 +35,38 @@ jobs:
       #     wait-on: 'http://localhost:5000'
           # wait-on-timeout: 240
 
-      - uses: akhileshns/heroku-deploy@v3.8.8 # This is the action
-        if: ${{ github.event_name == 'push' }}
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "ali-raza-syed-pokedex" #Must be unique in Heroku
-          heroku_email: "saliraza486@gmail.com"
-          healthcheck: "https://ali-raza-syed-pokedex.herokuapp.com/health"
-          checkstring: "ok"
-          rollbackonhealthcheckfailed: true
+      # - uses: akhileshns/heroku-deploy@v3.8.8 # This is the action
+      #   if: ${{ github.event_name == 'push' }}
+      #   with:
+      #     heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+      #     heroku_app_name: "ali-raza-syed-pokedex" #Must be unique in Heroku
+      #     heroku_email: "saliraza486@gmail.com"
+      #     healthcheck: "https://ali-raza-syed-pokedex.herokuapp.com/health"
+      #     checkstring: "ok"
+      #     rollbackonhealthcheckfailed: true
 
-      - uses: actions/checkout@v2
-        if: ${{ github.event_name == 'push' }}
+      # - uses: actions/checkout@v2
+      #   if: ${{ github.event_name == 'push' }}
 
-      - name: Bump version and push tag (master merge)
-        if: ${{ github.event_name == 'push' }}
-        uses: anothrNick/github-tag-action@1.33.0
+      # - name: Bump version and push tag (master merge)
+      #   if: ${{ github.event_name == 'push' }}
+      #   uses: anothrNick/github-tag-action@1.33.0
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     DEFAULT_BUMP: patch
+      
+      - name: gihub context
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BUMP: patch
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: commits
+        env:
+          COMMITS: ${{ toJson(github.event.commits) }}
+        run: echo "$COMMITS"
+      - name: commit messages
+        env:
+          COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
+        run: echo "$COMMIT_MESSAGES"
 
 
 
