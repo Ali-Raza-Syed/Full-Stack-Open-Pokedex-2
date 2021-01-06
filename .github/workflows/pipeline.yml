@@ -51,13 +51,12 @@ jobs:
         if: ${{ github.event_name == 'push' }}
 
       - name: Bump version and push tag (master merge)
-        env:
-          SKIP: ${{ toJson( contains( join( github.event.commits.*.message, ',' ), '#skip' ) ) }}
         if: github.event_name == 'push' && $SKIP == false
         uses: anothrNick/github-tag-action@1.33.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
+          SKIP: ${{ toJson( contains( join( github.event.commits.*.message, ',' ), '#skip' ) ) }}
 
       - name: commit messages
         env:
