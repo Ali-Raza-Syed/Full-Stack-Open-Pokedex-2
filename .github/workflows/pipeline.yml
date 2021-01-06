@@ -58,12 +58,13 @@ jobs:
           DEFAULT_BUMP: patch
           SKIP: ${{ contains( join( github.event.commits.*.message, ',' ), '#skip' ) }}
 
-      - name: commit messages
+      - uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
         env:
-          COMMIT_MESSAGES: ${{ contains( join( github.event.commits.*.message, ',' ), '#skip' ) }}
-        run: echo "$COMMIT_MESSAGES"
-
-
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+        if: always() # Pick up events even if the job fails or is canceled.
 
 
 
