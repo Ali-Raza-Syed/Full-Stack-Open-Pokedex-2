@@ -59,12 +59,11 @@ jobs:
           SKIP: ${{ contains( join( github.event.commits.*.message, ',' ), '#skip' ) }}
 
       - uses: 8398a7/action-slack@v3
-        if: ${{ github.event_name == 'push' }}
+        if: ${{ github.event_name == 'push' && always() }}
         with:
           status: ${{ job.status }}
           fields: message,commit,action,eventName,ref,workflow,job,took # selectable (default: repo,message)        env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_UR }} # required
-        if: always() # Pick up events even if the job fails or is canceled.
 
 
 
