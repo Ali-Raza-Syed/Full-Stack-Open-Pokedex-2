@@ -59,6 +59,7 @@ jobs:
           SKIP: ${{ contains( join( github.event.commits.*.message, ',' ), '#skip' ) }}
 
       - uses: 8398a7/action-slack@v3
+        if: ${{ github.event_name == 'push' && env.SKIP == 'false' }}
         with:
           status: ${{ job.status }}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
