@@ -1,4 +1,5 @@
 // eslint-disable-next-line no-undef
 module.exports = {
-  testEnvironment: 'jsdom'
+  testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['./jest.setup.js']
 }
